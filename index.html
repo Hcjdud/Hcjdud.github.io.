@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myxavpn — Профессиональный VPN сервис (демо)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header/Navigation */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37,99,235,0.2);
+        }
+
+        .btn-outline {
+            border: 2px solid #2563eb;
+            color: #2563eb;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+        }
+
+        .grid-3, .grid-4 {
+            display: grid;
+            gap: 30px;
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #e6f0ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #2563eb;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+        }
+
+        /* Stats */
+        .stats {
+            background: white;
+            padding: 40px 0;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+            gap: 30px;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 18px;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 60px 0;
+            background: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background: #f8fafc;
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .pricing-card.popular {
+            border-color: #2563eb;
+            transform: scale(1.05);
+            background: white;
+            box-shadow: 0 10px 25px rgba(37,99,235,0.1);
+        }
+
+        .pricing-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 20px;
+        }
+
+        .price small {
+            font-size: 16px;
+            color: #6b7280;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 30px 0;
+        }
+
+        .pricing-features li {
+            margin: 10px 0;
+            color: #4b5563;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 60px 0;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #4b5563;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        .testimonial-tariff {
+            color: #2563eb;
+            font-size: 14px;
+        }
+
+        /* Use Cases */
+        .use-cases {
+            padding: 60px 0;
+            background: white;
+        }
+
+        /* Footer/Policy Sections */
+        .policy-section {
+            background: #1a1a1a;
+            color: white;
+            padding: 60px 0;
+        }
+
+        .policy-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .policy-content h2 {
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .policy-content h3 {
+            color: #2563eb;
+            margin: 30px 0 15px;
+        }
+
+        .policy-content p, .policy-content li {
+            color: #cbd5e0;
+            margin-bottom: 10px;
+        }
+
+        .policy-content ul {
+            margin-left: 20px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .footer {
+            background: #0f172a;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .contact-info {
+            margin: 20px 0;
+        }
+
+        .contact-info a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-3, .grid-4, .pricing-grid, .testimonial-grid, .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .pricing-card.popular {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo">myxavpn</a>
+            <nav class="nav-links">
+                <a href="#features">Возможности</a>
+                <a href="#pricing">Тарифы</a>
+                <a href="#testimonials">Отзывы</a>
+                <a href="#policy">Документы</a>
+            </nav>
+            <a href="#" class="btn btn-primary">Подключиться</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>myxavpn — профессиональный VPN сервис</h1>
+            <p>Современный VPN сервис с приложением для всех ОС и расширением для браузера. Защита приватности и безопасности данных в один клик.</p>
+            <a href="#" class="btn btn-outline" style="border-color: white; color: white; margin-right: 15px;">Узнать больше</a>
+            <a href="#" class="btn btn-primary">Начать сейчас</a>
+        </div>
+    </section>
+
+    <!-- Quick Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="grid-3">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Без логирования</h3>
+                    <p>Мы не логируем ваши данные, не отслеживаем активность и не передаем информацию третьим лицам</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Быстрая настройка</h3>
+                    <p>Быстрая настройка подключения без сложных конфигураций.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Гарантия возврата</h3>
+                    <p>Возврат средств в течение 3 дней при несоответствии заявленным характеристикам.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div>
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">серверов в разных странах</div>
+                </div>
+                <div>
+                    <div class="stat-number">Все ОС</div>
+                    <div class="stat-label">приложение и расширение</div>
+                </div>
+                <div>
+                    <div class="stat-number">No-Logs</div>
+                    <div class="stat-label">строгая политика</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Apps Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Приложение и расширение для браузера</h2>
+            <p style="text-align: center; margin-bottom: 40px;">Удобные решения для всех ваших устройств</p>
+            
+            <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div class="feature-card">
+                    <h3>📱 Приложение для всех ОС</h3>
+                    <p><em>Универсальное</em></p>
+                    <ul style="margin: 20px 0 20px 20px; color: #6b7280;">
+                        <li>Windows, macOS, Linux</li>
+                        <li>Android, iOS и Android TV</li>
+                        <li>Простая установка и настройка</li>
+                        <li>Автоматическое подключение</li>
+                        <li>Высокая скорость соединения</li>
+                    </ul>
+                    <p>Единое приложение для всех операционных систем с интуитивно понятным интерфейсом и максимальной производительностью.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>🌐 Расширение для Chrome</h3>
+                    <p><em>Бесплатно</em></p>
+                    <ul style="margin: 20px 0 20px 20px; color: #6b7280;">
+                        <li>Быстрое подключение в один клик</li>
+                        <li>SOCKS5 прокси поддержка</li>
+                        <li>Минималистичный дизайн</li>
+                        <li>Защита данных в браузере</li>
+                        <li>Бесплатные и премиум серверы</li>
+                    </ul>
+                    <p>Удобное расширение для Google Chrome с поддержкой SOCKS5 прокси и современным интерфейсом.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Тарифы</h2>
+            <p style="text-align: center; margin-bottom: 40px;">Выберите формат: расширение, приложение или всё вместе</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Extension</h3>
+                    <p>Расширение для браузера</p>
+                    <div class="price">от 65 ₽<small>/мес</small></div>
+                    <ul class="pricing-features">
+                        <li>✅ Подключение в один клик</li>
+                        <li>✅ Защита трафика в браузере</li>
+                        <li>✅ SOCKS5 поддержка</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Выбрать</a>
+                </div>
+                
+                <div class="pricing-card popular">
+                    <div style="background: #2563eb; color: white; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px;">Популярный</div>
+                    <h3>Pro</h3>
+                    <p>VPN в приложении для всех ОС</p>
+                    <div class="price">от 75 ₽<small>/мес</small></div>
+                    <ul class="pricing-features">
+                        <li>✅ Windows / macOS / Linux</li>
+                        <li>✅ Android / iOS</li>
+                        <li>✅ Быстрое и стабильное соединение</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Выбрать</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Max</h3>
+                    <p>Расширение + приложение</p>
+                    <div class="price">от 105 ₽<small>/мес</small></div>
+                    <ul class="pricing-features">
+                        <li>✅ Все возможности Extension</li>
+                        <li>✅ Все возможности Pro</li>
+                        <li>✅ Единый доступ для всех устройств</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Выбрать</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="use-cases">
+        <div class="container">
+            <h2 class="section-title">Кому подходит</h2>
+            <div class="grid-4">
+                <div class="feature-card">
+                    <h3>💼 Бизнес</h3>
+                    <ul style="color: #6b7280; list-style: none;">
+                        <li>• Безопасный доступ сотрудников к рабочим сервисам</li>
+                        <li>• Защита данных при работе в публичных сетях Wi‑Fi</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>👨‍💻 Фрилансеры</h3>
+                    <ul style="color: #6b7280; list-style: none;">
+                        <li>• Стабильный доступ к зарубежным инструментам и площадкам</li>
+                        <li>• Разделение рабочих/личных сессий через расширение</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>👤 Обычные пользователи</h3>
+                    <ul style="color: #6b7280; list-style: none;">
+                        <li>• Приватность в интернете и защита от трекинга</li>
+                        <li>• Безопасность при оплатах/банкинге в дороге</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>⚙️ Разработчики</h3>
+                    <ul style="color: #6b7280; list-style: none;">
+                        <li>• Доступ к репозиториям/документации и CI/CD без сбоев</li>
+                        <li>• Безопасные подключения и работа с инфраструктурой</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Отзывы</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">«Подключили Pro на команду из 6 человек: стало спокойнее работать из кафе и коворкингов.»</p>
+                    <div class="testimonial-author">Алексей, Москва</div>
+                    <div class="testimonial-tariff">Тариф: Pro</div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">«Extension очень выручает: включаю только в браузере, а приложения на ноутбуке не трогаю. Быстро и удобно.»</p>
+                    <div class="testimonial-author">Марина, Екатеринбург</div>
+                    <div class="testimonial-tariff">Тариф: Extension</div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">«Взял Max: на телефоне приложение, на рабочем браузере — расширение. В поездках банкинг и почта работают стабильнее.»</p>
+                    <div class="testimonial-author">Илья, Казань</div>
+                    <div class="testimonial-tariff">Тариф: Max</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">О сервисе</h2>
+            <div class="grid-3">
+                <div class="feature-card">
+                    <h3>⏱️ Опыт работы</h3>
+                    <p>Стабильная работа на рынке VPN услуг с постоянным развитием технологий и инфраструктуры.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔒 Надежность</h3>
+                    <p>Стабильный сервис, которому доверяют пользователи по всему миру.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📊 Техническая экспертиза</h3>
+                    <p>Команда специалистов с опытом в области сетевой безопасности и инфраструктуры.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Подключитесь к сервису</h2>
+            <p>Начните использовать профессиональный VPN сервис для защиты вашей приватности и безопасности</p>
+            <a href="#" class="btn btn-outline" style="border-color: white; color: white;">Попробовать бесплатно</a>
+        </div>
+    </section>
+
+    <!-- Policy Section -->
+    <section class="policy-section" id="policy">
+        <div class="container policy-content">
+            <h2>Политика конфиденциальности</h2>
+            
+            <h3>1. ОБЩИЕ ПОЛОЖЕНИЯ</h3>
+            <p>1.1. Настоящая Политика конфиденциальности разработана в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных».</p>
+            <p>1.2. Настоящая Политика определяет порядок обработки и защиты персональных данных пользователей VPN сервиса «Муха VPN».</p>
+            
+            <h3>2. ОПРЕДЕЛЕНИЕ ПЕРСОНАЛЬНЫХ ДАННЫХ</h3>
+            <p>2.1. Принцип минимальной обработки данных: Сервис собирает только необходимые данные для предоставления VPN услуг.</p>
+            <p>2.2. Данные, которые НЕ собираются и НЕ обрабатываются:</p>
+            <ul>
+                <li>IP-адреса пользователей</li>
+                <li>Содержание интернет-трафика</li>
+                <li>История посещения сайтов</li>
+                <li>История соединений</li>
+                <li>Метаданные о времени и продолжительности сессий</li>
+                <li>Логи подключений</li>
+            </ul>
+            
+            <h3>3. ОБРАБАТЫВАЕМЫЕ ДАННЫЕ</h3>
+            <p>3.1. Сервис обрабатывает следующие категории данных:</p>
+            <ul>
+                <li>Идентификационные данные: имя пользователя (username) в Telegram, Telegram ID</li>
+                <li>Технические данные: версия клиентского приложения, тип операционной системы</li>
+                <li>Данные оплаты: информация о финансовых транзакциях через платежные системы</li>
+                <li>Служебные данные: статистика использования сервера (агрегированная)</li>
+            </ul>
+            
+            <h3>7. ПОЛИТИКА NO-LOGS</h3>
+            <p>7.1. Сервис придерживается строгой политики отсутствия логирования (no-logs policy).</p>
+            <p>7.2. Мы не ведем и не храним логи, содержащие историю соединений, IP-адреса или DNS-запросы пользователей, содержание и пункты назначения трафика.</p>
+            
+            <h3>13. КОНТАКТНАЯ ИНФОРМАЦИЯ</h3>
+            <p>13.1. По всем вопросам, связанным с обработкой персональных данных, вы можете обращаться:</p>
+            <ul>
+                <li>Telegram: @myxavpnsupport</li>
+                <li>Email: support@myxavpn.com</li>
+            </ul>
+            <p><small>Последнее обновление: 20 января 2025 года | Версия: 2.0</small></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="logo" style="color: white; margin-bottom: 20px;">myxavpn</div>
+            <div class="contact-info">
+                <p>Telegram: @myxavpnsupport | Email: support@myxavpn.com</p>
+                <p>Уполномоченный орган: Роскомнадзор (Российская Федерация)</p>
+            </div>
+            <p style="color: #6b7280; margin-top: 30px;">© 2025 myxavpn. Все права защищены.</p>
+            <p style="color: #6b7280; font-size: 14px; margin-top: 10px;">* Демонстрационная версия для GitHub</p>
+        </div>
+    </footer>
+</body>
+              </html>
